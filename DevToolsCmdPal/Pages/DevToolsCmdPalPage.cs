@@ -30,15 +30,24 @@ internal sealed partial class DevToolsCmdPalPage : DynamicListPage
             Name = "文字列を入力して機能を表示..."
         });
 
+        UpdateGuid();
+    }
+
+    private void UpdateGuid()
+    {
         EmptyListItem = [new ListItem(new NoOpCommand()
         {
             Name = "文字列を入力してBase64とハッシュ化機能を利用..."
         }),
-        new ListItem(new CopyTextCommand(Guid.NewGuid().ToString()){
-            Name = "クリップボードにランダムなGUIDをコピー"
+        new ListItem(new AnonymousCommand(() =>ClipboardHelper.SetText( Guid.NewGuid().ToString())){
+            Name = "クリップボードにランダムなGUIDをコピー",
+            Result = CommandResult.ShowToast("GUIDをコピーしました"),
+            Icon = Icons.CopyIcon
         }),
-        new ListItem(new CopyTextCommand(Guid.CreateVersion7().ToString()){
-            Name = "クリップボードにランダムなGUIDv7をコピー"
+        new ListItem(new AnonymousCommand(() =>ClipboardHelper.SetText( Guid.CreateVersion7().ToString())){
+            Name = "クリップボードにランダムなGUIDv7をコピー",
+            Result = CommandResult.ShowToast("GUIDv7をコピーしました"),
+            Icon = Icons.CopyIcon
         })];
     }
 
@@ -49,6 +58,7 @@ internal sealed partial class DevToolsCmdPalPage : DynamicListPage
             _items.Clear();
             if (string.IsNullOrWhiteSpace(searchText))
             {
+                UpdateGuid();
                 _items.AddRange(EmptyListItem);
             } else
             {
@@ -119,6 +129,7 @@ internal sealed partial class DevToolsCmdPalPage : DynamicListPage
 
     public override void UpdateSearchText(string oldSearch, string newSearch)
     {
+        UpdateGuid(); // 毎回GUIDを更新して新しいものを表示する
         if (oldSearch == newSearch)
         {
             return;
@@ -127,6 +138,7 @@ internal sealed partial class DevToolsCmdPalPage : DynamicListPage
         UpdateItems(newSearch);
 
     }
+
     public override IListItem[] GetItems()
     {
         return _items.ToArray();

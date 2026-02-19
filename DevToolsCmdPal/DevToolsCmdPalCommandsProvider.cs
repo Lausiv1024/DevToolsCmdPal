@@ -14,7 +14,7 @@ public partial class DevToolsCmdPalCommandsProvider : CommandProvider
     public DevToolsCmdPalCommandsProvider()
     {
         DisplayName = "開発ツールdesuyo";
-        Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
+        Icon = Icons.Logo;
         _commands = [
             new CommandItem(new DevToolsCmdPalPage()) { Title = DisplayName, Subtitle = "Base64やハッシュ化などの簡単な変換を提供します" },
         ];
