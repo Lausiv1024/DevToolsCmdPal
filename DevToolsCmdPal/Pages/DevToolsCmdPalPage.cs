@@ -22,7 +22,7 @@ internal sealed partial class DevToolsCmdPalPage : DynamicListPage
         Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
         Title = "開発ツール";
         Name = "Open";
-        PlaceholderText = "Search in DevToolsCmdPal...";
+        PlaceholderText = "Type To Create Base64 or Compute Hash";
         _items = [];
 
         EmptyContent = new CommandItem(new NoOpCommand()
